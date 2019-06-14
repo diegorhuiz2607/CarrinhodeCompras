@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    
+    <ui:composition template="../templates/template.xhtml">
+        <ui:define name="titleWindow">Meu Carrinho - Compras</ui:define>
+        <ui:define name="content">
+            <div class="ui-g" >
+                <div class="ui-g-1"></div>
+                <div class="ui-g-5">
+                    <h1>Meu Carrinho</h1>
+                </div>
+               
+                <div class="ui-g-1"></div>
+                <div class="ui-g-5">
+          
+                <h4>Valor a Pagar</h4>
+               <p:inputText id="valor"  value="#{carrinhoMB.soma}" style="width: 40%;"/>        
+              <p:commandButton value="Pagar"  style="margin-right:20px;" action="#{carrinhoMB.somar(carrinho)}"/>
+                </div>
+                
+                <div class="ui-g-1"></div>
+               
+                
+                <div class="ui-g-10">
+                    <p:dataTable value="#{carrinhoMB.carrinho.produtos}" var="carrinho"
+                                 paginator="true" paginatorPosition="bottom"
+                                 rows="10" emptyMessage="Nenhum registro encontrado">
+                        <f:facet name="header">Listagem de Produtos</f:facet>
+                        <f:facet name="footer">Total de Registros: #{carrinhoMB.carrinho.produtos.size()}</f:facet>
+                        <p:column headerText="Nome do Produto" sortBy="">
+                            <h:outputText value="#{carrinho.titulo}"/>
+                        </p:column>  
+                        <p:column headerText="Preço" sortBy="">
+                            <h:outputText value="#{carrinho.preco}"/>
+                        </p:column> 
+                        <p:column headerText="Excluir" width="70" style="text-align: center;">
+                            <p:commandButton icon="ui-icon-trash" action="#{carrinhoMB.excluir(carrinho)}"
+                                             onclick="if(!confirm('Confirma exclusão?'))return false" update="form"/>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+                
+                <div class="ui-g-1"></div>
+                
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
